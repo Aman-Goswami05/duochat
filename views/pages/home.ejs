@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/home.css">
+    <title>Chat</title>
+</head>
+<body>
+    <div class="nav">
+        <h3 id="username"><%=user.username %></h2>
+        <a href="#"><i class="fas fa-user dp"></i></a>
+    </div>
+    <div class="main" id="main-chat">
+        <div class="chat-container">
+            <div class="friends">
+                <div class="friends-title">
+                    <h2>My Chats</h2>
+                    <div class="add-user">
+                        <span class="link">
+                            <a id="addBtn" href="#">
+                                <i class="fas fa-plus add-btn"></i>
+                            </a>
+                        </span>
+                    </div>
+                    <hr>                        
+                </div>
+                <div class="friends-list" id="add-friend">
+                    <% user.friends.forEach(friend => { %>
+                        <div class="friend">
+                            <i class="fa-solid fa-circle-user"></i>
+                            <div class="clickable">
+                                <button onclick="addChat('<%= friend %>')">
+                                    <h2><%= friend %></h2>
+                                </button>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            </div>
+            <div class="chat-section" id="chatSection">
+            </div>
+        </div>
+    </div>
+
+    <div class="search-user-form" id="search-user-form">
+        <a href="#" id="searchCross">
+            <i class="fa-solid fa-circle-xmark"></i>
+        </a>
+        <div class="form" id="searchDiv">
+            <button id="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <input type="text" id="search-user" placeholder="Search username" required>
+        </div>
+        <div class="search">
+            <button id="search-result"></button>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script src="https://kit.fontawesome.com/9e5ba2e3f5.js" crossorigin="anonymous"></script>
+    <script src="../js/home.js"></script>
+</body>
+</html>

@@ -111,7 +111,7 @@ form .form-group input:valid~i{
 }
 
 .wrapper .form-container form .forgot-pass{
-    margin: -1.5rem 0 1.5rem;
+    margin: -1.5rem 0 0.5rem;
 }
 
 .wrapper .form-container form .forgot-pass a{
@@ -215,4 +215,11 @@ form .form-group input:valid~i{
     transform: rotate(7deg);
     animation: rotatecard .7s ease-in-out forwards;
     animation-delay: .3s;
+}
+
+.error{
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+    font-weight: bolder;
 }
