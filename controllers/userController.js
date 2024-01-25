@@ -3,8 +3,8 @@ const bcrypt = require('bcrypt');
 
 const signup = async (req,res)=>{
     const {username} = req.body;
-    const user = await users.findOne({username: username});
-    if(user){
+    const checkuser = await users.findOne({username: username});
+    if(checkuser){
         return res.render('pages/sign',{
             message: 'User already exists'
         })
@@ -16,9 +16,8 @@ const signup = async (req,res)=>{
         email: req.body.email,
         password: passwordHash
     });
-    res.render('pages/home',{
-        username: username
-    });
+    const user = {username}
+    res.render('pages/home',{user});
 }
 
 const login = async (req,res)=>{
