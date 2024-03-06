@@ -5,6 +5,7 @@ const searchCross = document.getElementById('searchCross');
 const searchUserForm = document.getElementById('search-user-form');
 const username = document.getElementById('username');
 const addFriend = document.getElementById('add-friend');
+const messageBox = document.getElementById('message-box');
 
 addUser.addEventListener('click', (event) => {
     searchUserForm.style.visibility = 'visible';
@@ -48,9 +49,45 @@ socket.on('friend-added', (friendName) => {
     addFriend.innerHTML = addFriend.innerHTML + `<div class="friend"><i class="fa-solid fa-circle-user"></i><div class="clickable"><button onclick="addChat('` + friendName + `')"><h2>` + friendName + `</h2></button></div></div>`;
 });
 
+socket.on('loadNewChat',(data)=>{
+    let reciever_id = data.reciever_id;
+    let senderId = username.innerText;
+    let recieverId = document.getElementById('friend-name').innerText;
+    let sender_id = data.sender_id;
+    if(reciever_id.match(senderId) && sender_id.match(recieverId)){
+        messageBox.innerHTML += `<div class="message friend-message"><p>`+ data.message + `</p> </div>`;
+    }
+});
+
 function addChat(friend) {
     const chatSection = document.getElementById('chatSection');
-    console.log("Friend Chat clicked");
-    chatSection.innerHTML = '';
-    chatSection.innerHTML = '<div class="chat-title"><h2>' + friend + '</h2></div><hr><div class="chat-main"><div class="message-box"><div class="message my-message"><p>Hii</p></div><div class="message friend-message"><p>Hii Aman</p></div></div><div class="message-input"><div class="type"><input type="text" placeholder="Message"></div><a href="#"><i class="fa-solid fa-share"></i></i></a></div></div>';
+    chatSection.style.display = 'block';
+    document.getElementById('friend-name').innerText = friend; 
+}
+
+function sendMessage(){
+    const sender = username.innerText;
+    const reciever = document.getElementById('friend-name').innerText;
+    const message = document.getElementById('message');
+    fetch('savechat',{
+        method: "post",
+        crossDomain: "true",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            sender_id: sender,
+            reciever_id: reciever,
+            message: message.value
+        }),
+    }).then(response => response.json())
+    .then((data)=>{
+        if(data.success){
+            message.value = '';
+            messageBox.innerHTML += `<div class="message my-message"> <p>`+ data.data.message + `</p> </div>`;
+            socket.emit('newChat',data.data);
+        }else{
+            console.log("Error");
+        }
+    })
 }

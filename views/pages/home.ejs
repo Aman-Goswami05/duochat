@@ -40,7 +40,20 @@
                     <% }%>
                 </div>
             </div>
-            <div class="chat-section" id="chatSection">
+            <div class="chat-section" id="chatSection" style="display: none;">
+                <div class="chat-title">
+                    <h2 id="friend-name"></h2>
+                </div><hr>
+                <div class="chat-main">
+                    <div id="message-box">
+                    </div>
+                    <div class="message-input">
+                        <div class="type">
+                            <input type="text" id="message" placeholder="Message">
+                        </div>
+                        <button onclick="sendMessage()" style="cursor: pointer;"><i class="fa-solid fa-share"></i></button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

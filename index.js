@@ -1,5 +1,5 @@
 const express = require('express');
-const {signup,login} = require('./controllers/userController');
+const {signup,login,saveChat} = require('./controllers/userController');
 const {conntectToMongoDB} = require('./connect');
 const socketIO = require('socket.io');
 const http = require('http');
@@ -30,6 +30,11 @@ io.on('connection',(socket)=>{
             io.emit('friend-added',friendName);                                
         }
     })
+
+    // Chatting implementation
+    socket.on('newChat', (data) => {
+        io.emit('loadNewChat',data);
+    })
 });
 
 // Database 
@@ -53,6 +58,8 @@ app.get('/',(req,res)=>{
 app.post('/login',login);
 
 app.post('/signup',signup);
+
+app.post('/savechat',saveChat);
 
 const port = 3000;
 server.listen(port,()=>{

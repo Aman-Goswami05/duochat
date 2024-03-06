@@ -236,7 +236,7 @@ body{
     border-radius: 1rem;
 }
 
-.message-box{
+#message-box{
     height: 80%;
     width: 100%;
     background-color: var(--whiteColor);
